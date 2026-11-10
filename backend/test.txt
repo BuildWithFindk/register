@@ -1,0 +1,75 @@
+1.  Register a user. You should get 201 and a token in the answer:
+
+14:04:09 roshan@rawal:~/Downloads/register/backend (main*) $ curl -i -X POST http://127.0.0.1:8000/api/register -H "Accept: application/json" -H "Content-Type: application/json" -d '{"name":"roshan","email":"cakeschords@gmail.com","password":"123456789","password_confirmation":"123456789"}' 
+HTTP/1.0 500 Internal Server Error
+Host: 127.0.0.1:8000
+Connection: close
+X-Powered-By: PHP/8.5.12
+Cache-Control: no-cache, private
+Date: Sat, 31 Oct 2026 08:20:14 GMT
+Content-Type: application/json
+
+{
+    "message": "Cannot redeclare class App\\Http\\Controllers\\AuthController (previously declared in /Users/roshan/Downloads/register/backend/app/Http/Controllers/AuthController.php:12)",
+    "exception": "Symfony\\Component\\ErrorHandler\\Error\\FatalError",
+    "file": "/Users/roshan/Downloads/register/backend/app/Models/User.php",
+    "line": 12,
+    "trace": []
+}%               
+
+
+
+2.  Log in with the same details. You should get 200 and a new token:
+
+14:05:14 roshan@rawal:~/Downloads/register/backend (main*) $ curl -i -X POST http://127.0.0.1:8000/api/login -H "Accept: application/json" -H "Content-Type: application/json" -d '{"email":"cakeschords@gmail.com","password":"123456789"}'   
+HTTP/1.0 500 Internal Server Error
+Host: 127.0.0.1:8000
+Connection: close
+X-Powered-By: PHP/8.5.12
+Cache-Control: no-cache, private
+Date: Sat, 31 Oct 2026 08:22:06 GMT
+Content-Type: application/json
+
+{
+    "message": "Cannot redeclare class App\\Http\\Controllers\\AuthController (previously declared in /Users/roshan/Downloads/register/backend/app/Http/Controllers/AuthController.php:12)",
+    "exception": "Symfony\\Component\\ErrorHandler\\Error\\FatalError",
+    "file": "/Users/roshan/Downloads/register/backend/app/Models/User.php",
+    "line": 12,
+    "trace": []
+}%        
+
+
+
+
+3. Try a wrong password. You should get 401 with “Incorrect email or password.”
+
+14:07:07 roshan@rawal:~/Downloads/register/backend (main*) $ curl -i -X POST http://127.0.0.1:8000/api/login -H "Accept: application/json" -H "Content-Type: application/json" -d '{"email":"cakeschords@gmail.com","password":"12345679"}' 
+HTTP/1.0 500 Internal Server Error
+Host: 127.0.0.1:8000
+Connection: close
+X-Powered-By: PHP/8.5.12
+Cache-Control: no-cache, private
+Date: Sat, 31 Oct 2026 08:22:52 GMT
+Content-Type: application/json
+
+{
+    "message": "Cannot redeclare class App\\Http\\Controllers\\AuthController (previously declared in /Users/roshan/Downloads/register/backend/app/Http/Controllers/AuthController.php:12)",
+    "exception": "Symfony\\Component\\ErrorHandler\\Error\\FatalError",
+    "file": "/Users/roshan/Downloads/register/backend/app/Models/User.php",
+    "line": 12,
+    "trace": []
+}%       
+
+
+
+
+
+4. Copy the token from step 2 and check it works. You should see your name and email:
+
+14:07:52 roshan@rawal:~/Downloads/register/backend (main*) $ curl http://127.0.0.1:8000/api/me -H "Accept: application/json" -H "Authorization: Bearer PASTE_TOKEN_HERE" 
+{"message":"Unauthenticated."}%          
+
+
+
+
+
